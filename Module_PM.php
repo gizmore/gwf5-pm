@@ -16,12 +16,10 @@ final class Module_PM extends GWF_Module
 	public function getUserSettings()
 	{
 		return array(
-			GDO_Int::make('pm_auto_folder')->initial('0')->notNull(),
-			GDO_Level::make('pm_level')->initial('0')->notNull(),
-			GDO_Message::make('pm_signature')->max(1024),
+			GDO_Message::make('pm_signature')->max(1024)->label('pm_signature'),
+			GDO_Level::make('pm_level')->initial('0')->notNull()->label('pm_level'),
 			GDO_Checkbox::make('pm_email')->initial('0'),
 			GDO_Checkbox::make('pm_guests')->initial('0'),
-			GDO_Checkbox::make('pm_ghosts')->initial('0'),
 		);
 	}
 	public function getConfig()

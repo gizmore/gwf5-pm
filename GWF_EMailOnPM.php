@@ -10,7 +10,7 @@ final class GWF_EMailOnPM
 	public static function deliver(Module_PM $module, GWF_PM $pm)
 	{
 		$receiver = $pm->getReceiver();
-		if (GWF_UserSetting::userGet($receiver, 'pm_email'))
+		if (GWF_UserSetting::userGet($receiver, 'pm_email')->getGDOValue())
 		{
 			if ($receiver->getMail())
 			{
@@ -39,9 +39,9 @@ final class GWF_EMailOnPM
 			$sitename,
 			$pm->display('pm_title'),
 			$pm->display('pm_message'),
-			GWF_HTML::anchor(href('PM', 'Delete', "&id=$pm->getID()&token={$pm->gdoHashcode()}")),
+			GWF_HTML::anchor(href('PM', 'Delete', "&id={$pm->getID()}&token={$pm->gdoHashcode()}")),
 		)));
 		$email->sendToUser($receiver);
-		echo GWF_Response::message('msg_pm_mail_sent', [$receiver->displayName()]);
+		echo GWF_Response::message('msg_pm_mail_sent', [$receiver->displayName()])->render();
 	}
 }

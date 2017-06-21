@@ -20,7 +20,7 @@ final class PM_Read extends GWF_Method
 			$pm->getOtherPM()->saveVar('pm_other_read', '1');
 		}
 		$actions = array(
-			GDO_Link::make('delete')->gdo($pm)->icon('delete'),
+			GDO_Button::make('delete')->gdo($pm)->icon('delete'),
 			GDO_Button::make('reply')->gdo($pm)->icon('reply'),
 			GDO_Button::make('quote')->gdo($pm)->icon('quote'),
 		);
