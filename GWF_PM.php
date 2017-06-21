@@ -1,6 +1,8 @@
 <?php
 final class GWF_PM extends GDO # implements GDO_Searchable
 {
+	public function gdoCached() { return false; }
+	
 	###########
 	### GDO ###
 	###########
@@ -28,7 +30,7 @@ final class GWF_PM extends GDO # implements GDO_Searchable
 	##################
 	### Convinient ###
 	##################
-	public function isRead() { return $this->getVar('pm_read_at') === null; }
+	public function isRead() { return $this->getVar('pm_read_at') !== null; }
 	public function displayDate() { return GWF_Time::displayDate($this->getVar('pm_date')); }
 	
 	/**
@@ -49,11 +51,27 @@ final class GWF_PM extends GDO # implements GDO_Searchable
 	public function getOtherID() { return $this->getVar('pm_other'); }
 
 	/**
+	 * Get the other user that differs from param user.
+	 * One of the two users has to match.
+	 * @param GWF_User $user
+	 * @return GWF_User
+	 */
+	public function getOtherUser(GWF_User $user)
+	{
+		if ($user->getID() === $this->getFromID())
+		{
+			return $this->getReceiver();
+		}
+		elseif ($user->getID() === $this->getToID())
+		{
+			return $this->getSender();
+		}
+	}
+	
+	/**
 	 * @return GWF_PM
 	 */
 	public function getOtherPM() { return $this->getValue('pm_other'); }
-// 	public function isSender() { return $this->getVar('pm_from') === $this->getVar('pm_owner'); }	
-// 	public function isRecipient() { return $this->getVar('pm_to') === $this->getVar('pm_owner'); }	
 
 	public function getFromID() { return $this->getVar('pm_from'); }
 	public function getToID() { return $this->getVar('pm_to'); }
@@ -62,12 +80,13 @@ final class GWF_PM extends GDO # implements GDO_Searchable
 	 * @return GWF_PM
 	 */
 	public function getParent() { return $this->getValue('pm_parent'); }
-
+	
 	/**
+	 * @param GWF_User $owner
 	 * @return GWF_PM
 	 */
-	public function getParentFor(GWF_User $owner) { return $this->getOwnerID() === $owner->getID() ? $this->getParent() : $this->getOtherPM()->getParent(); }
-
+	public function getPMFor(GWF_User $owner) { return $this->getOwnerID() === $owner->getID() ? $this : $this->getOtherPM(); }
+	
 	public function isFrom(GWF_User $user) { return $this->getFromID() === $user->getID(); }
 	public function isTo(GWF_User $user) { return $this->getToID() === $user->getID(); }
 	
@@ -78,7 +97,7 @@ final class GWF_PM extends GDO # implements GDO_Searchable
 	public function href_show() { return href('PM', 'Read', "&id={$this->getID()}"); }
 	public function href_delete() { return href('PM', 'Overview', "&delete=1&rbx[{$this->getID()}]=1"); }
 	public function href_reply() { return href('PM', 'Write', '&reply='.$this->getID()); }
-	public function href_quote() { return href('PM', 'Write', '&quote&reply='.$this->getID()); }
+	public function href_quote() { return href('PM', 'Write', '&quote=yes&reply='.$this->getID()); }
 	
 	##############
 	### Static ###

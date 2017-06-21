@@ -18,6 +18,7 @@ final class GWF_PMFolder extends GDO
 		);
 	}
 	public function getID() { return $this->getVar('pmf_id'); }
+	public function getUserID() { return $this->getVar('pmf_user'); }
 	public function getName() { return $this->getVar('pmf_name'); }
 	public function displayName() { return $this->display('pmf_name'); }
 // 	public function isRealFolder() { return $this->getID() > 2; }
@@ -28,10 +29,15 @@ final class GWF_PMFolder extends GDO
 	 */
 	public static function getFolders(string $userid)
 	{
-		return array_merge(
-			GWF_PMFolder::getDefaultFolders(),
-			self::table()->select('*')->where('pmf_user='.quote($userid))->exec()->fetchAllObjects()
-		);
+		static $folders;
+		if (!isset($folders))
+		{
+			$folders = array_merge(
+				GWF_PMFolder::getDefaultFolders(),
+				self::table()->select('*')->where('pmf_user='.quote($userid))->exec()->fetchAllObjects()
+			);
+		}
+		return $folders;
 	}
 	
 	/**
@@ -47,7 +53,13 @@ final class GWF_PMFolder extends GDO
 			case self::INBOX: return self::getInBox();
 			case self::OUTBOX: return self::getOutBox();
 		}
-		return self::table()->select('*')->where("pmf_id=$folderId AND pmf_user={$user->getID()}")->exec()->fetchAllObjects();
+		if ($folder = self::table()->find($folderId, false))
+		{
+			if ($folder->getUserID() === $user->getID())
+			{
+				return $folder;
+			}
+		}
 	}
 	
 	
