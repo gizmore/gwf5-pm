@@ -22,7 +22,9 @@ return array(
 'pm_to' => '  TO: %s',
 'pm_sent' => 'sent on %s',
 # Overview
+'btn_move' => 'Move to folder',
 'msg_pm_deleted' => 'There were %s PM deleted in total.',
+'err_pm_folder' => 'PM folder could not be found.',
 ################################################
 'pm_welcome_title' => 'Welcome to %s',
 'pm_welcome_message' => '
