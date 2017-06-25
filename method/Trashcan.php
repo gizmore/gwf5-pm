@@ -55,10 +55,10 @@ final class PM_Trashcan extends GWF_MethodQueryTable
 		return $this->filterQuery($this->getQueryPaginated())->select('*')->exec();
 	}
 	
-	public function onDecorateTable(GWF_Table $gwfTable)
+	public function onDecorateTable(GDO_Table $table)
 	{
-		$gwfTable->title(t('name_trashcan'));
-		$gwfTable->navbar()->addFields(array(
+		$table->rawlabel(t('name_trashcan'));
+		$table->navbar()->addFields(array(
 			GDO_Submit::make('restore')->label('btn_restore'),
 			GDO_Submit::make('delete')->label('btn_delete'),
 			GDO_Submit::make('trash')->label('btn_empty'),
