@@ -3,7 +3,6 @@ final class PM_Folders extends GWF_MethodTable
 {
 	public function isFiltered() { return false; }
 	public function isPaginated() { return false; }
-	
 	public function isUserRequired() { return true; }
 	
 	public function getHeaders()
@@ -18,10 +17,5 @@ final class PM_Folders extends GWF_MethodTable
 	public function getResult()
 	{
 		return new GDOArrayResult(GWF_PMFolder::getFolders(GWF_User::current()->getID()));
-	}
-	
-	public function getResultCount()
-	{
-		return count($this->getResult());
 	}
 }

@@ -25,7 +25,7 @@ final class GDO_PMFolder extends GDO_Select
 		$choices = [];
 		foreach (GWF_PMFolder::getFolders($user->getID()) as $folder)
 		{
-			$choices[$folder->getName()] = $folder->getName();
+			$choices[$folder->getID()] = $folder->getName();
 		}
 		return $choices;
 	}
