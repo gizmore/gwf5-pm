@@ -58,7 +58,7 @@ final class PM_Trashcan extends GWF_MethodQueryTable
 	public function onDecorateTable(GDO_Table $table)
 	{
 		$table->rawlabel(t('name_trashcan'));
-		$table->navbar()->addFields(array(
+		$table->actions()->addFields(array(
 			GDO_Submit::make('restore')->label('btn_restore'),
 			GDO_Submit::make('delete')->label('btn_delete'),
 			GDO_Submit::make('trash')->label('btn_empty'),
