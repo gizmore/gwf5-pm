@@ -47,7 +47,7 @@ final class PM_Trashcan extends GWF_MethodQueryTable
 	public function getQuery()
 	{
 		$user = GWF_User::current();
-		return GWF_PM::table()->query()->from('gwf_pm')->where('pm_owner='.$user->getID())->where("pm_deleted_at IS NOT NULL");
+		return GWF_PM::table()->select('*')->where('pm_owner='.$user->getID())->where("pm_deleted_at IS NOT NULL");
 	}
 	
 	public function getResult()
