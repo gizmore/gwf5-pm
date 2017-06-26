@@ -98,18 +98,7 @@ final class Module_PM extends GWF_Module
 	##############
 	public function onRenderFor(GWF_Navbar $navbar)
 	{
-		$user = GWF_User::current();
-		if ($navbar->isRight() && $user->isAuthenticated())
-		{
-// 			$this->initModule();
-			$count = GWF_PM::table()->countWhere("pm_to={$user->getID()} AND pm_read_at IS NULL");
-			$button = GDO_Link::make('btn_pm')->href(href('PM', 'Overview'));
-			if ($count > 0)
-			{
-				$button->label('btn_pm_unread', [$count]);
-			}
-			$navbar->addField($button);
-		}
+		$this->templatePHP('sidebar.php', ['navbar' => $navbar]);
 	}
 	
 }

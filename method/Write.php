@@ -97,6 +97,7 @@ final class PM_Write extends GWF_MethodForm
 				'pm_other_read' => '1',
 		))->insert();
 		$pmFrom->saveVar('pm_other', $pmTo->getID());
+		$to->tempUnset('gwf_pm_unread');
 		$this->module->includeClass('GWF_EMailOnPM');
 		GWF_EMailOnPM::deliver(Module_PM::instance(), $pmTo);
 	}

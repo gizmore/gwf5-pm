@@ -115,6 +115,18 @@ final class GWF_PM extends GDO # implements GDO_Searchable
 		return self::table()->select('*')->where("pm_id={$id} AND pm_owner={$user->getID()}")->exec()->fetchObject();
 	}
 	
+	##############
+	### Unread ###
+	##############
+	public static function countUnread(GWF_User $user)
+	{
+		if ($null !== ($cache = $user->tempGet('gwf_pm_unread')))
+		{
+			$cache = self::table()->countWhere("pm_to={$user->getID()} AND pm_read_at IS NULL");
+			$user->tempSet('gwf_pm_unread', $cache);
+		}
+		return $cache;
+	}
 	
 // 	public function displayMessage()
 // 	{
