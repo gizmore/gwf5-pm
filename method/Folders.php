@@ -16,6 +16,7 @@ final class PM_Folders extends GWF_MethodTable
 	
 	public function getResult()
 	{
-		return new GDOArrayResult(GWF_PMFolder::getFolders(GWF_User::current()->getID()));
+		$folders = GWF_PMFolder::getFolders(GWF_User::current()->getID());
+		return new GDOArrayResult($folders, GWF_PMFolder::table());
 	}
 }
