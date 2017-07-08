@@ -7,6 +7,8 @@ return array(
 'link_write_pm' => 'Write New PM',
 # Trashcan
 'name_trashcan' => 'Trashcan',
+'inbox_name' => 'Incoming',
+'outbox_name' => 'Sent',
 'btn_restore' => 'Restore',
 'btn_empty' => 'Empty',
 'btn_delete' => 'Delete',
