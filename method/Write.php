@@ -100,5 +100,6 @@ final class PM_Write extends GWF_MethodForm
 		$to->tempUnset('gwf_pm_unread');
 		$this->module->includeClass('GWF_EMailOnPM');
 		GWF_EMailOnPM::deliver(Module_PM::instance(), $pmTo);
+		GWF_Hook::call('PMSent', [$pmTo]);
 	}
 }
