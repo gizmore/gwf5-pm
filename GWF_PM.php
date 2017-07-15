@@ -19,7 +19,7 @@ final class GWF_PM extends GDO # implements GDO_Searchable
 			GDO_Object::make('pm_folder')->klass('GWF_PMFolder')->notNull(),
 			GDO_Object::make('pm_parent')->klass('GWF_PM')->cascadeNull(),
 			GDO_Object::make('pm_other')->klass('GWF_PM')->cascadeNull(),
-			GDO_String::make('pm_title')->notNull(),
+			GDO_String::make('pm_title')->notNull()->label('title'),
 			GDO_Message::make('pm_message')->notNull(),
 			GDO_Checkbox::make('pm_other_read')->initial('0'),
 			GDO_Checkbox::make('pm_other_deleted')->initial('0'),

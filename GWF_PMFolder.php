@@ -14,7 +14,7 @@ final class GWF_PMFolder extends GDO
 			GDO_AutoInc::make('pmf_id'),
 			GDO_User::make('pmf_user'),
 			GDO_Name::make('pmf_name')->notNull(),
-			GDO_Int::make('pmf_count')->unsigned()->initial('0'),
+			GDO_Int::make('pmf_count')->unsigned()->initial('0')->label('count'),
 		);
 	}
 	public function getID() { return $this->getVar('pmf_id'); }
