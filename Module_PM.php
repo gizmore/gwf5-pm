@@ -75,13 +75,13 @@ final class Module_PM extends GWF_Module
 	#############
 	### Hooks ###
 	#############
-	public function hookUserActivated(array $args)
+	public function hookUserActivated(GWF_User $user)
 	{
 		if ($this->cfgWelcomePM())
 		{
 			if ($bot = $this->cfgBotUser())
 			{
-				$this->sendWelcomePM(method('PM', 'Write'), $bot, $args[0]);
+				$this->sendWelcomePM(method('PM', 'Write'), $bot, $user);
 			}
 		}
 	}
