@@ -14,6 +14,7 @@ return array(
 'btn_delete' => 'Delete',
 'btn_pm' => 'Private Messages',
 # Write
+'ft_pm_write' => '[%s] Write Private Message',
 # Settings
 'pm_email' => 'E-Mail on PM',
 'pm_level' => 'Userlevel needed to PM you',
@@ -27,6 +28,8 @@ return array(
 'btn_move' => 'Move to folder',
 'msg_pm_deleted' => 'There were %s PM deleted in total.',
 'err_pm_folder' => 'PM folder could not be found.',
+'pm_sent' => 'Sent, %s',
+'pm_received' => 'Received, %s',
 ################################################
 'pm_welcome_title' => 'Welcome to %s',
 'pm_welcome_message' => '

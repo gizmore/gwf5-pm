@@ -1,7 +1,9 @@
 <?php
-final class PM_Folder extends GWF_MethodQueryTable
+final class PM_Folder extends GWF_MethodQueryList
 {
 	public function isUserRequired() { return true; }
+	
+	public function gdoTable() { return GWF_PM::table(); }
 	
 	/**
 	 * @var GWF_PMFolder
@@ -15,32 +17,32 @@ final class PM_Folder extends GWF_MethodQueryTable
 		$this->folder = GWF_PMFolder::table()->find(Common::getRequestInt('folder', 1));
 	}
 	
-	public function getHeaders()
+	public function getFilters()
 	{
 		$table = GWF_PM::table();
 		return array(
-			GDO_RowNum::make(),
-			GDO_Template::make()->module($this->module)->template('cell_pmunread.php'),
-			GDO_PMFromTo::make('frmto'),
-			$table->gdoColumn('pm_title'),
-			GDO_Button::make('show'),
+// 			GDO_RowNum::make(),
+// 			GDO_Template::make()->module($this->module)->template('cell_pmunread.php'),
+// 			GDO_PMFromTo::make('frmto'),
+// 			$table->gdoColumn('pm_title'),
+// 			GDO_Button::make('show'),
 		);
 	}
 	
-	public function getQuery()
+	public function gdoQuery()
 	{
 		$user = GWF_User::current();
 		return GWF_PM::table()->select('*')->where('pm_owner='.$user->getID())->where('pm_folder='.$this->folder->getID())->where("pm_deleted_at IS NULL");
 	}
 	
-	public function onDecorateTable(GDO_Table $table)
+	public function gdoDecorateList(GDO_List $list)
 	{
-		$table->rawlabel($this->folder->display('pmf_name'));
-		$table->href(href('PM', 'Overview'));
-		$table->actions()->addFields(array(
-			GDO_Submit::make('delete')->label('btn_delete'),
-			GDO_Submit::make('move')->label('btn_move'),
-			GDO_PMFolder::make('folder')->user(GWF_User::current()),
-		));
+		$list->rawlabel($this->folder->display('pmf_name'));
+		$list->href(href('PM', 'Overview'));
+// 		$list->actions()->addFields(array(
+// 			GDO_Submit::make('delete')->label('btn_delete'),
+// 			GDO_Submit::make('move')->label('btn_move'),
+// 			GDO_PMFolder::make('folder')->user(GWF_User::current()),
+// 		));
 	}
 }

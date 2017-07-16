@@ -37,7 +37,7 @@ final class PM_Write extends GWF_MethodForm
 		list($username, $title, $message) = $this->initialValues();
 		$table = GWF_PM::table();
 		$form->addFields(array(
-			GDO_Username::make('pm_to')->exists()->validator([$this, 'validateCanSend'])->value($username),
+			GDO_User::make('pm_to')->notNull()->validator([$this, 'validateCanSend'])->value($username),
 			$table->gdoColumn('pm_title')->value($title),
 			$table->gdoColumn('pm_message')->value($message),
 			GDO_Submit::make(),
@@ -69,7 +69,7 @@ final class PM_Write extends GWF_MethodForm
 	
 	public function formValidated(GWF_Form $form)
 	{
-		$this->deliver(GWF_User::current(), $form->getField('pm_to')->gdo, $form->getVar('pm_title'), $form->getVar('pm_message'), $this->reply);
+		$this->deliver(GWF_User::current(), $form->getValue('pm_to'), $form->getVar('pm_title'), $form->getVar('pm_message'), $this->reply);
 		return $this->message('msg_pm_sent');
 	}
 	
@@ -98,8 +98,23 @@ final class PM_Write extends GWF_MethodForm
 		))->insert();
 		$pmFrom->saveVar('pm_other', $pmTo->getID());
 		$to->tempUnset('gwf_pm_unread');
-		$this->module->includeClass('GWF_EMailOnPM');
-		GWF_EMailOnPM::deliver(Module_PM::instance(), $pmTo);
-		GWF_Hook::call('PMSent', $pmTo);
+		
+		# Copy to next func
+		$this->pmTo = $pmTo;
+	}
+	
+	/**
+	 * @var GWF_PM
+	 */
+	private $pmTo;
+	public function afterExecute()
+	{
+		if ($this->pmTo)
+		{
+			$pmTo = $this->pmTo;
+			$this->module->includeClass('GWF_EMailOnPM');
+			GWF_EMailOnPM::deliver($pmTo);
+			GWF_Hook::call('PMSent', $pmTo);
+		}
 	}
 }

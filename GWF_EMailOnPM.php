@@ -7,19 +7,19 @@
  */
 final class GWF_EMailOnPM
 {
-	public static function deliver(Module_PM $module, GWF_PM $pm)
+	public static function deliver(GWF_PM $pm)
 	{
 		$receiver = $pm->getReceiver();
 		if (GWF_UserSetting::userGet($receiver, 'pm_email')->getGDOValue())
 		{
 			if ($receiver->getMail())
 			{
-				self::sendMail($module, $pm, $receiver);
+				self::sendMail($pm, $receiver);
 			}
 		}
 	}
 	
-	private static function sendMail(Module_PM $module, GWF_PM $pm, GWF_User $receiver)
+	private static function sendMail(GWF_PM $pm, GWF_User $receiver)
 	{
 		$sender = $pm->getSender();
 		

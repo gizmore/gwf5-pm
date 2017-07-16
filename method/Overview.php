@@ -34,6 +34,11 @@ final class PM_Overview extends GWF_Method
 	##############
 	### Delete ###
 	##############
+	public function getRBX()
+	{
+		return Common::getGetInt('id');
+	}
+	
 	private function onDelete()
 	{
 		if ($ids = $this->getRBX())
