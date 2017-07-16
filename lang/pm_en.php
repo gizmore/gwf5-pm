@@ -15,6 +15,7 @@ return array(
 'btn_pm' => 'Private Messages',
 # Write
 'ft_pm_write' => '[%s] Write Private Message',
+'msg_pm_sent' => 'Your private message has been sent.',
 # Settings
 'pm_email' => 'E-Mail on PM',
 'pm_level' => 'Userlevel needed to PM you',
